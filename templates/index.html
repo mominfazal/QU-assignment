@@ -1,0 +1,332 @@
+<html>
+<head>
+	<title> Donald Trump news and tweets</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+	
+	<script type="text/javascript">
+		var meta;
+		var finalHtmlElement = ""
+		$(document).ready(function(){
+			$('.CNNdiv').show();
+			$(".Twitterdiv").hide();
+		//    $("#CNNtab").on('click',function(){
+		$('a[href="#CNNtab"]').click(function(){
+		    	$('.Twitterdiv').hide();
+		    	$('.CNNdiv').show();
+		     });
+		//    $("#Twittertab").on('click',function(){
+		$('a[href="#Twittertab"]').click(function(){
+		    	$('.CNNdiv').hide();
+		    	$('.Twitterdiv').show();
+		    });
+		});
+
+		function startfrom(){
+			var a = $('#startfrom');
+			$('.eachNewsend').remove();
+	    	a.val(parseInt(a.val())+1);
+	    	cnn_search();
+		}
+		function cnn_search(){
+				
+		    $.ajax({
+	           type: "POST",
+	           url: "/get_data_from_cnn",
+	           data: $("#main_form_cnn").serialize(), // serializes the form's elements.
+	           success: function(data)
+	           {
+	           		makeCNNHTML(data);
+	           }
+	        });
+		}
+
+		function makeCNNHTML(data){
+			var output = data.results;// show response from the python api script.
+        	jQuery.each(output, function(i, val) {
+				htmlElement = "<div class='eachNews'><a href='"+val.detailsUrl+"'><h3>"+val.headline+"</h3></a><span class='date'>Posted On:"+val.firstPublishDate+"<span><br><p class='paragraph'>"+val.desc_text+"</p></div><br>";
+				finalHtmlElement = finalHtmlElement+htmlElement;
+			});
+			meta = data.meta;
+        	$('.centerCNN').html(finalHtmlElement);
+        	if(data.meta.end < data.meta.of){
+				$('.centerCNN').append("<div class='eachNewsend'><center><button class='loadmore btn btn-info' id='loadmore' onclick='startfrom()'><i class='fa fa-plus-circle'></i> Load More</button></center></div>");
+			}
+			read_more();
+		}
+		// function details(tweetID,tweet){
+		// 	var finalHtmlElement1 = "";
+		// 	$('#myModal h4.modal-title').html(tweet.innerHTML);
+		//     $.ajax({
+	 //           type: "POST",
+	 //           url: "/get_data_from_twitter",
+	 //           data: {"tweetID":tweetID}, // serializes the form's elements.
+	 //           success: function(data)
+	 //           {
+	 //                var output = data.results;// show response from the python api script.
+	 //            	jQuery.each(output, function(i, val) {
+		// 				htmlElement = "<div class='eachNews'><span class='date'>Posted On:"+val.created_at+"</span><br><p class='paragraph' id='paragraph"+i+"'>"+val.twitter_text+"</p><button type='button' onclick='details("+val.id+",paragraph"+i+")' class='btn btn-info' data-toggle='modal' data-target='#myModal'>Read more on this tweet</button></div><br>";
+						
+		// 				finalHtmlElement1 = finalHtmlElement1+htmlElement;
+		// 				// jQuery.each(val.url,function(j,iframeUrl){
+		// 				// 	finalHtmlElement1 = finalHtmlElement1+"<iframe src='"+iframeUrl+"'></iframe><br/>";
+		// 				// });
+		// 			});
+	 //            	$('.centerTwitter').html(finalHtmlElement1);
+	 //           }
+	 //        });
+		// }
+
+		function twitter_search(){
+				var finalHtmlElement1 = ""
+			    
+			    $.ajax({
+		           type: "POST",
+		           url: "/get_data_from_twitter",
+		           data: $("#main_form_twitter").serialize(), // serializes the form's elements.
+		           success: function(data)
+		           {
+		                var output = data.results;// show response from the python api script.
+		            	jQuery.each(output, function(i, val) {
+							htmlElement = "<div class='eachNews'><span class='date'>Posted On:"+val.created_at+"</span><br><p class='paragraph' id='paragraph"+i+"'>"+val.twitter_text+"</p></div><br>"; //<button type='button' onclick='details("+val.id+",paragraph"+i+")' class='btn btn-info' data-toggle='modal' data-target='#myModal'>Read more on this tweet</button>
+							
+							finalHtmlElement1 = finalHtmlElement1+htmlElement;
+							// jQuery.each(val.url,function(j,iframeUrl){
+							// 	finalHtmlElement1 = finalHtmlElement1+"<iframe src='"+iframeUrl+"'></iframe><br/>";
+							// });
+						});
+		            	$('.centerTwitter').html(finalHtmlElement1);
+		           }
+		        });
+			}
+	</script>
+</head>
+<body>	
+	
+	<div class="main">
+		<div class="top">
+			<h2> News Feed </h2>
+			<ul class="nav nav-pills">
+				<li class="active"></i><a data-toggle="pill" href="#CNNtab"><i class="fa fa-newspaper-o"></i> CNN News</a></li>
+				<li><a data-toggle="pill"  href="#Twittertab"><i class="fa fa-twitter"></i> Twitter</a></li>
+			</ul>
+			
+		
+			<div class="CNNdiv" style="display: none;">
+				<div class="search_bar">
+					Search for CNN News Here
+					<form id="main_form_cnn">
+						<input type="text" id="search_bar" name="query" placeholder="donald trump" class="form-control">
+						<input type="hidden" id="startfrom" name="startfrom"  value="1">
+						<input type="button" value="Search" class="main_form_cnn_button btn btn-info" onclick="cnn_search()">
+					</form>
+				</div>
+			</div>
+			<div class="Twitterdiv" style="">
+				<div class="search_bar">
+					Search for tweets using twitter Handle Here
+					<form id="main_form_twitter">
+						<input type="text" id="search_bar" name="query" placeholder="realDonaldTrump" class="form-control">
+						<input type="button" value="Search" class="main_form_twitter_button btn btn-info" onclick="twitter_search()">
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Header</h4>
+					</div>
+					<div class="modal-body">
+						<p>Some text in the modal.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	
+		
+		<div class="content tab-content">
+			<div class="centerCNN tab-pane fade in active" id="CNNtab">
+			
+			</div>
+			
+			
+			<div class="centerTwitter tab-pane fade" id="Twittertab">
+			
+			
+			</div>
+		</div>
+			
+		<div class="footer">
+			<div class="text-center center-block">
+				<p class="txt-railway">-- Created by Fazal Momin - #QU Reference Number 20179011032-1 --</p>
+				<a href="https://plus.google.com/u/0/113962850636858620304"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+				<a href="mailto:momin.fazal.m@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+				<a href="https://www.linkedin.com/in/fazal-momin-a0b245106"><i id="social-tw" class="fa fa-linkedin-square fa-3x social"></i></a>
+			</div>
+		</div>
+	</div>
+
+<style type="text/css">
+	* {
+	  margin: 0;
+	  padding: 0;
+	  @include box-sizing(border-box);
+	}
+
+	.main {
+	    width: 80%;
+	    align-content: center;
+	    margin-left: 10%;
+	}
+	.tabs{
+		width: 100%;
+	}
+	.tabs span span {
+	    /* margin-top: 0%; */
+	    /* padding-bottom: 3%; */
+	    padding-left: 8%;
+	    padding-right: 8%;
+	    /*border: 1px solid #ccc;*/
+	    height: auto;
+	    cursor: pointer;
+	}
+	.content {
+	    width: 90%;
+	    margin: 5%;
+	    margin-left: 0;
+	}
+	p.paragraph {
+		display: block; 
+	}
+	.CNNdiv, .Twitterdiv{
+	    width: 100%;
+	    margin: 3%;
+	    margin-left: 0;
+	}
+	.search_bar input[type=text] {
+	    width: 50%;
+		float: left;
+        margin: 0 10px 0 0;
+	}	
+/*	.search_bar input[type=text] {
+	    height: 30px;
+	    width: 43%;
+	    margin: 8px 0;
+	    display: inline-block;
+	    border: 1px solid #ccc;
+	    box-shadow: inset 0 1px 3px #ddd;
+	    border-radius: 4px;
+	    -webkit-box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	    padding-left: 20px;
+	    padding-right: 20px;
+	    padding-top: 12px;
+	    padding-bottom: 12px;
+	}
+	input.main_form_cnn_button, input.main_form_twitter_button, button.loadmore{
+	    width: 10%;
+	    display: inline-block;
+	    /*border: 1px solid grey;*/
+	    color: black;
+	    height: 30px;
+	    border-radius: 4px;
+	    cursor: pointer;
+	}
+*/	
+	span#CNNtab {
+	    background-color: #777777;
+	}
+	span#Twittertab {
+	    background-color: #7777;
+	}
+	.eachNews {
+	    border: 1px solid #ccc;
+	    margin: 1%;
+	    margin-left: 0;
+	    padding: 2%;
+	}
+	.eachNewsend{
+		border: 0px;
+	}
+	.centerTwitter .eachNews p{
+		height: 90px;
+		padding: 0.5%;
+	}
+	
+	
+	.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, body {    font-family: Roboto;}
+	h1, h2, h3, h4, h5, h6{ font-weight: 700;}
+	.nav-pills>li>a {    background: #cacaca;}
+	.tab-content div{    background-color: #fff;}
+	.date{ padding: 10px 0; color: #8c8c8c;  font-style: italic;}
+	.paragraph{  color: #000;    font-size: 15px;    line-height: 25px; height: auto;   overflow-y: scroll;     font-style: normal;}
+	 .paragraph .more-text{        display: none;    }
+	    
+  .social:hover {
+     -webkit-transform: scale(1.1);
+     -moz-transform: scale(1.1);
+     -o-transform: scale(1.1);
+ }
+ .social {
+     -webkit-transform: scale(0.8);
+     /* Browser Variations: */
+     
+     -moz-transform: scale(0.8);
+     -o-transform: scale(0.8);
+     -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+     -o-transition-duration: 0.5s;
+ }
+ #social-fb:hover {
+     color: #3B5998;
+ }
+ #social-tw:hover {
+     color: #4099FF;
+ }
+ #social-gp:hover {
+     color: #d34836;
+ }
+ #social-em:hover {
+     color: #f39c12;
+ }
+	
+	
+</style>
+<script type="text/javascript">
+function read_more(argument) {
+	var maxLength = 300;
+    $(".paragraph").each(function(){
+        var myStr = $(this).text();
+        if($.trim(myStr).length > maxLength){
+            var newStr = myStr.substring(0, maxLength);
+            var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+            $(this).empty().html(newStr);
+            $(this).append(' <a href="javascript:void(0);" class="read-more">read more...</a>');
+            $(this).append('<span class="more-text">' + removedStr + '</span>');
+        }
+    });
+}
+$(document).ready(function(){
+    $(".read-more").click(function(){
+        $(this).siblings(".more-text").contents().unwrap();
+        $(this).remove();
+    });
+});
+</script>
+</body></html>
