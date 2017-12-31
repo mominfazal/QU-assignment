@@ -2,7 +2,7 @@
 
 ## Description
 
-We can run this project the URL : 172.31.18.197
+We can run this project the URL : http://35.182.245.170:5000
 
 This project includes 2 APIS:
 1) To fetch Twitter tweets as per the handle inserted in the text box. 
@@ -22,6 +22,13 @@ CNN API provides us data which is collected using simple HTTP requests, this req
 ## Installation
 
 To run this project we require below mentioned packaged:
-Python:
-1) TWEEPY
-2) Flask
+Python: (If pip is installed then following commands can help)
+1) TWEEPY (pip install tweepy)
+2) Flask (pip install flask)
+3) hit command export FLASK_APP=index.py
+
+## Run FLASK server
+cd /directory-of-code/
+python -m flask run
+
+Output must be on URL http://127.0.0.1:5050 for local PCs
