@@ -16,6 +16,8 @@ This project includes 2 APIS:
 	
 	Parameters : {query:donald trump, startfrom:1} //CNN search query as the value of parameter "query" and the loadmore count as value of "startfrom"
 
+Additional API details mentioned at the end of this guide.
+
 ## Code Flow
 
 The APIs are developed using Flask library of Python(It is used to create APIs).
@@ -48,4 +50,16 @@ That is because we need few more things like uWsgi to host the flask applicaiton
 Ensure the PORT you are working on is open(Default for flask is 5000)
 
 Run you file using command: uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi
+
+##
+## Working of API
+1) Twitter.
+	We pass parameters consumer_key, consumer_secret, access_token_key, access_token_secret to twitter api using tweety library.
+	We use user_timeline function to fetch timeline tweets using handle : api.user_timeline(query,count=25,tweet_mode="extended")
+
+	The response object is then converted and cleaned into JSON response.
+
+2) CNN news.
+	CNN news uses a common API to fetch the news. This news is fetched using API : https://search<dot>api<dot>cnn<dot>io/content?q=querytext&size=25
+	We get a JSON string from the API which is converted to JSON object and returned as response.
 
