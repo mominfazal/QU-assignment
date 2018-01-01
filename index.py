@@ -109,6 +109,7 @@ def get_data_from_cnn(query,start):
 			singleData['headline'] = str(eachData['headline'])
 			singleData['firstPublishDate'] = str(eachData['firstPublishDate'][:10])
 			singleData['detailsUrl'] = str(eachData['url'])
+			singleData['thumbnail'] = str(eachData['thumbnail'])
 			dataToSend['results'].append(singleData)
 		except:
 			print(sys.exc_info()[0])
