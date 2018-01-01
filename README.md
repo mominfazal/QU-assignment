@@ -29,6 +29,7 @@ Python: (If pip is installed then following commands can help. In case pip is no
 
 ## Run FLASK server
 cd /directory-of-code/
+
 python -m flask run
 
 Output must be on URL http://127.0.0.1:5000 for local PCs
