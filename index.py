@@ -112,3 +112,6 @@ def get_data_from_cnn(query,start):
 			print(sys.exc_info()[0])
 			
 	return dataToSend
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug = False)
