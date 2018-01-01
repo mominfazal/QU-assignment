@@ -6,7 +6,11 @@ We can run this project the URL : http://35.183.33.171:5000
 
 This project includes 2 APIS:
 1) To fetch Twitter tweets as per the handle inserted in the text box. 
+	POST Request : http://domain_name/get_data_from_twitter
+	Parameters : {query:realDonaldTrump} //Twitter handle as the value of parameter 
 2) To fetch the CNN news as per the topic inserted in the text box.
+	POST Request : http://domain_name/get_data_from_cnn
+	Parameters : {query:donald trump, startfrom:1} //CNN search query as the value of parameter "query" and the loadmore count as value of "startfrom"
 
 ## Code Flow
 
@@ -34,11 +38,10 @@ python -m flask run
 
 Output must be on URL http://127.0.0.1:5000 for local PCs
 
-## Not working on remote server? 
-That is because we need few more things. Just move on with the guide in the URL below step by step and that must do the trick for you. 
-https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
+## Flask application not working on remote server?
+That is because we need few more things like uWsgi to host the flask applicaiton across remote HTTP. Just move on with the guide in the URL below step by step and that must do the trick for you. https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
 
-<<<<<<< HEAD
 Ensure the PORT you are working on is open(Default for flask is 5000)
 
-Run you file using command: python index.py
+Run you file using command: uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi
+
