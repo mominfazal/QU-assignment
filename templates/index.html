@@ -48,7 +48,7 @@
 		function makeCNNHTML(data){
 			var output = data.results;// show response from the python api script.
         	jQuery.each(output, function(i, val) {
-				htmlElement = "<div class='eachNews'><a href='"+val.detailsUrl+"'><h3>"+val.headline+"</h3></a><span class='date'>Posted On:"+val.firstPublishDate+"<span><br><p class='paragraph'>"+val.desc_text+"</p></div><br>";
+				htmlElement = "<div class='eachNews'><a href='"+val.detailsUrl+"'><img src='"+val.thumbnail+"' /><h3>"+val.headline+"</h3></a><span class='date'>Posted On:"+val.firstPublishDate+"<span><br><p class='paragraph'>"+val.desc_text+"</p></div><br>";
 				finalHtmlElement = finalHtmlElement+htmlElement;
 			});
 			meta = data.meta;
