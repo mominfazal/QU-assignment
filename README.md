@@ -38,3 +38,5 @@ That is because we need few more things. Just move on with the guide in the URL 
 https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
 
 Ensure the PORT you are working on is open.
+
+Run you file using command: python index.py
