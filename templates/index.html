@@ -92,7 +92,7 @@
 		           {
 		                var output = data.results;// show response from the python api script.
 		            	jQuery.each(output, function(i, val) {
-							htmlElement = "<div class='eachNews'><span class='date'>Posted On:"+val.created_at+"</span><br><p class='paragraph' id='paragraph"+i+"'>"+val.twitter_text+"</p></div><br>"; //<button type='button' onclick='details("+val.id+",paragraph"+i+")' class='btn btn-info' data-toggle='modal' data-target='#myModal'>Read more on this tweet</button>
+							htmlElement = "<div class='eachNews'><span class='date'>Posted On:"+val.created_at+"</span><br><p class='paragraph' id='paragraph"+i+"'>"+val.twitter_text+"</p><p class='para2'><b> &nbsp;Likes:</b>"+val.likes+" <b> Retweets:</b>"+val.retweet_count+"</p></div><br>"; //<button type='button' onclick='details("+val.id+",paragraph"+i+")' class='btn btn-info' data-toggle='modal' data-target='#myModal'>Read more on this tweet</button>
 							
 							finalHtmlElement1 = finalHtmlElement1+htmlElement;
 							// jQuery.each(val.url,function(j,iframeUrl){
@@ -308,6 +308,9 @@
  }
  #social-em:hover {
      color: #f39c12;
+ }
+ .centerTwitter .eachNews p.para2{
+ 	height: 0px;
  }
 	
 	

@@ -69,6 +69,8 @@ def get_data_from_twitter(query,tweetID):
 			singleData['twitter_text'] = re.sub(r'[^\x00-\x7f]',r'', eachData.full_text.encode("utf-8")) # remove hexadecimal characters
 			singleData['url'] = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', singleData['twitter_text']) #find all URLS - iframe URLS in this case
 			singleData['created_at'] = str(eachData.created_at.date())
+			singleData['retweet_count'] = str(eachData.retweet_count)
+			singleData['likes'] = str(eachData.favorite_count)
 			singleData['id'] = str(eachData.id_str.encode("utf-8"))
 			for url in singleData['url']:
 				singleData['twitter_text'] = singleData['twitter_text'].replace(url,'').strip()  # Remove all URLS from text as we wont display it.
