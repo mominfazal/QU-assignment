@@ -6,9 +6,11 @@ We can run this project the URL : http://35.183.33.171:5000
 
 This project includes 2 APIS:
 1) To fetch Twitter tweets as per the handle inserted in the text box. 
+	
 	POST Request : http://domain_name/get_data_from_twitter
 	Parameters : {query:realDonaldTrump} //Twitter handle as the value of parameter 
 2) To fetch the CNN news as per the topic inserted in the text box.
+	
 	POST Request : http://domain_name/get_data_from_cnn
 	Parameters : {query:donald trump, startfrom:1} //CNN search query as the value of parameter "query" and the loadmore count as value of "startfrom"
 
