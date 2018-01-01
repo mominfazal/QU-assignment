@@ -60,6 +60,7 @@ def get_data_from_twitter(query,tweetID):
 	# 	dataToSend['total_tweets'] = len(tweetData)
 	# 	dataToSend['results'] = []
 	except:
+		userData = []
 		dataToSend['error_message'] = 'Coudnt connect to twitter'
 
 	for eachData in userData:

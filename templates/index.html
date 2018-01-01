@@ -99,7 +99,11 @@
 							// 	finalHtmlElement1 = finalHtmlElement1+"<iframe src='"+iframeUrl+"'></iframe><br/>";
 							// });
 						});
-		            	$('.centerTwitter').html(finalHtmlElement1);
+						if(data.error_message){
+							$('.centerTwitter').html(data.error_message);
+						}else{
+							$('.centerTwitter').html(finalHtmlElement1);
+						}
 		           }
 		        });
 			}

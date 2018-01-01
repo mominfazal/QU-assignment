@@ -37,4 +37,4 @@ Output must be on URL http://127.0.0.1:5000 for local PCs
 That is because we need few more things. Just move on with the guide in the URL below step by step and that must do the trick for you. 
 https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
 
-Ensure the PORT you are working on is open.
+Ensure the PORT you are working on is open(Default for flask is 5000)
