@@ -96,6 +96,7 @@ def get_data_from_cnn(query,start):
 		dataToSend['meta'] = query_data['meta']    
 		dataToSend['results'] = []
 	except: 
+		query_data = []
 		dataToSend['error_message'] = 'Coudnt connect to twitter'
 
 	# print query_data['result']
